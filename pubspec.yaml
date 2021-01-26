@@ -54,6 +54,11 @@ flutter:
     - assets/images/app_name.png
     - assets/audio/click_sound.mp3
 
+  fonts:
+    - family: IranSans
+      fonts:
+        - asset: assets/fonts/iransans.ttf
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

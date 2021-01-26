@@ -495,49 +495,50 @@ class Attributes {
 
 class Images {
   int id;
-  String dateCreated;
-  String dateCreatedGmt;
-  String dateModified;
-  String dateModifiedGmt;
   String src;
-  String name;
-  String alt;
-  int position;
+  // String dateCreated;
+  // String dateCreatedGmt;
+  // String dateModified;
+  // String dateModifiedGmt;
+  // String name;
+  // String alt;
+  // int position;
 
   Images(
       {this.id,
-      this.dateCreated,
-      this.dateCreatedGmt,
-      this.dateModified,
-      this.dateModifiedGmt,
       this.src,
-      this.name,
-      this.alt,
-      this.position});
+      // this.dateCreated,
+      // this.dateCreatedGmt,
+      // this.dateModified,
+      // this.dateModifiedGmt,
+      // this.name,
+      // this.alt,
+      // this.position
+      });
 
   Images.fromJson(dynamic json) {
     id = json["id"];
-    dateCreated = json["date_created"];
-    dateCreatedGmt = json["date_created_gmt"];
-    dateModified = json["date_modified"];
-    dateModifiedGmt = json["date_modified_gmt"];
     src = json["src"];
-    name = json["name"];
-    alt = json["alt"];
-    position = json["position"];
+    // dateCreated = json["date_created"];
+    // dateCreatedGmt = json["date_created_gmt"];
+    // dateModified = json["date_modified"];
+    // dateModifiedGmt = json["date_modified_gmt"];
+    // name = json["name"];
+    // alt = json["alt"];
+    // position = json["position"];
   }
 
   Map<String, dynamic> toJson() {
     var map = <String, dynamic>{};
     map["id"] = id;
-    map["date_created"] = dateCreated;
-    map["date_created_gmt"] = dateCreatedGmt;
-    map["date_modified"] = dateModified;
-    map["date_modified_gmt"] = dateModifiedGmt;
     map["src"] = src;
-    map["name"] = name;
-    map["alt"] = alt;
-    map["position"] = position;
+    // map["date_created"] = dateCreated;
+    // map["date_created_gmt"] = dateCreatedGmt;
+    // map["date_modified"] = dateModified;
+    // map["date_modified_gmt"] = dateModifiedGmt;
+    // map["name"] = name;
+    // map["alt"] = alt;
+    // map["position"] = position;
     return map;
   }
 }

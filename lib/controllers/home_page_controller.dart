@@ -10,15 +10,30 @@ class HomePageController extends GetxController {
   var _lastScrollPosition = 0.0.obs;
   var _products;
   var _pageStatus = Consts.STATUS_LOADING.obs;
+  var _progressVisibility = true.obs;
+  bool requestPermitted = false;
+
+  int pageNum = 1;
+  String order = "asc";
+  String orderBy = "date";
+
   ScrollController _scrollController;
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final ApiRequests _apiRequests = ApiRequests();
 
+  get progressVisibility => _progressVisibility.value;
+
+  set progressVisibility(value) {
+    _progressVisibility.value = value;
+    update();
+  }
+
   get pageStatus => _pageStatus.value;
 
   set pageStatus(value) {
     _pageStatus.value = value;
+    update();
   }
 
   get lastScrollPosition => _lastScrollPosition.value;
@@ -34,8 +49,9 @@ class HomePageController extends GetxController {
       //Reach Bottom
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange) {
-        // refreshIndicatorKey.currentState.show();
+          !_scrollController.position.outOfRange && requestPermitted) {
+        requestPermitted = false;
+        requestProducts();
       }
 
       //Reach Top
@@ -52,7 +68,6 @@ class HomePageController extends GetxController {
   get products {
     if (_products == null) {
       refreshIndicatorKey.currentState.show();
-      print("got here");
       return null;
     }
     return _products.value;
@@ -60,26 +75,48 @@ class HomePageController extends GetxController {
 
   set products(value) {
     final rawJson = jsonDecode(value);
-    final posts = List<ProductsModel>.from(
-        rawJson.map((model) => ProductsModel.fromJson(model))).obs;
-    _products = posts;
-    // update();
+    if (_products == null) {
+      final posts = List<ProductsModel>.from(
+          rawJson.map((model) => ProductsModel.fromJson(model))).obs;
+      _products = posts;
+    } else {
+      for (var item in rawJson) {
+        _products.add(ProductsModel.fromJson(item));
+      }
+    }
+
+     update();
   }
 
   Future<void> requestProducts() async {
-    var response = await _apiRequests.getAllProducts();
+
+    Map<String, String> map = {
+      "page": pageNum.toString(),
+      "order": order,
+      "orderby": orderBy
+    };
+
+    var response = await _apiRequests.getProducts(map);
 
     if (response.statusCode == Consts.STATUS_SUCCESS) {
-      products = response.body;
       pageStatus = Consts.STATUS_SUCCESSFUL;
-      update();
+      if(jsonDecode(response.body).length == 10){
+        requestPermitted = true;
+        progressVisibility = true;
+        pageNum += 1;
+      } else {
+        progressVisibility = false;
+      }
+      products = response.body;
     }
   }
 
   refreshPage() {
     pageStatus = Consts.STATUS_LOADING;
     _products = null;
+    pageNum = 1;
     update();
+
     return requestProducts().then((value) => Consts.STATUS_SUCCESSFUL);
   }
 }
