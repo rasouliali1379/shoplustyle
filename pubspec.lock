@@ -151,11 +151,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_web_plugins:
-    dependency: transitive
-    description: flutter
-    source: sdk
-    version: "0.0.0"
   font_awesome_flutter:
     dependency: "direct main"
     description:
@@ -192,7 +187,7 @@ packages:
     source: hosted
     version: "2.1.19"
   intl:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: intl
       url: "https://pub.dartlang.org"
@@ -308,34 +303,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  soundpool:
-    dependency: "direct main"
-    description:
-      name: soundpool
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.3"
-  soundpool_macos:
-    dependency: transitive
-    description:
-      name: soundpool_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.2.6"
-  soundpool_platform_interface:
-    dependency: transitive
-    description:
-      name: soundpool_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
-  soundpool_web:
-    dependency: transitive
-    description:
-      name: soundpool_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.3"
   source_span:
     dependency: transitive
     description:

@@ -2,121 +2,117 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:shoplustyle/models/products_model.dart';
+import 'package:shoplustyle/controllers/main_page_controller.dart';
+import 'package:shoplustyle/models/category_model.dart';
 import 'package:shoplustyle/network/api_requests.dart';
+import 'package:shoplustyle/repository/category_repository.dart';
 import 'package:shoplustyle/utils/consts.dart';
+import 'package:shoplustyle/widgets/custom_slider_item.dart';
 
 class HomePageController extends GetxController {
-  var _lastScrollPosition = 0.0.obs;
-  var _products;
-  var _pageStatus = Consts.STATUS_LOADING.obs;
-  var _progressVisibility = true.obs;
-  bool requestPermitted = false;
+  final MainPageController mainController = Get.find();
 
-  int pageNum = 1;
-  String order = "asc";
-  String orderBy = "date";
-
+  var _sliderIndex = 0.obs;
+  var lastScrollPosition = 0.0;
   ScrollController _scrollController;
+  var _pageStatus = STATUS_LOADING;
+  var _categories = List<CategoryModel>().obs;
+  int pageNum = 1;
+  int selectedCategoryId = -1;
+  List<Widget> _carouselItems;
+
   final GlobalKey<RefreshIndicatorState> refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   final ApiRequests _apiRequests = ApiRequests();
 
-  get progressVisibility => _progressVisibility.value;
+  get sliderIndex => _sliderIndex.value;
 
-  set progressVisibility(value) {
-    _progressVisibility.value = value;
-    update();
+  set sliderIndex(value) {
+    _sliderIndex.value = value;
   }
 
-  get pageStatus => _pageStatus.value;
+
+  List<Widget> get carouselItems {
+    if(_carouselItems == null){
+      carouselSliderWidgets();
+    }
+
+    return _carouselItems;
+  }
+
+  set carouselItems(List<Widget> value) {
+    _carouselItems = value;
+  }
+
+  get categories {
+    if (_categories.length == 0) {
+      refreshIndicatorKey.currentState.show();
+      return null;
+    }
+    return _categories;
+  }
+
+  set categories(List<CategoryModel> list) {
+    _categories.addAll(list);
+  }
+
+  get pageStatus => _pageStatus;
 
   set pageStatus(value) {
-    _pageStatus.value = value;
+    _pageStatus = value;
     update();
-  }
-
-  get lastScrollPosition => _lastScrollPosition.value;
-
-  set lastScrollPosition(value) {
-    _lastScrollPosition.value = value;
   }
 
   get scrollController {
-    _scrollController =
-        ScrollController(initialScrollOffset: lastScrollPosition);
+    _scrollController = ScrollController();
     _scrollController.addListener(() {
       //Reach Bottom
       if (_scrollController.offset >=
               _scrollController.position.maxScrollExtent &&
-          !_scrollController.position.outOfRange && requestPermitted) {
-        requestPermitted = false;
-        requestProducts();
+          !_scrollController.position.outOfRange) {
+        // requestPermitted = false;
+        // requestCategories();
       }
 
       //Reach Top
       if (_scrollController.offset <=
               _scrollController.position.minScrollExtent &&
           !_scrollController.position.outOfRange) {}
-
-      lastScrollPosition = _scrollController.offset;
     });
 
     return _scrollController;
   }
 
-  get products {
-    if (_products == null) {
-      refreshIndicatorKey.currentState.show();
-      return null;
-    }
-    return _products.value;
-  }
-
-  set products(value) {
-    final rawJson = jsonDecode(value);
-    if (_products == null) {
-      final posts = List<ProductsModel>.from(
-          rawJson.map((model) => ProductsModel.fromJson(model))).obs;
-      _products = posts;
-    } else {
-      for (var item in rawJson) {
-        _products.add(ProductsModel.fromJson(item));
-      }
-    }
-
-     update();
-  }
-
-  Future<void> requestProducts() async {
-
-    Map<String, String> map = {
-      "page": pageNum.toString(),
-      "order": order,
-      "orderby": orderBy
-    };
-
-    var response = await _apiRequests.getProducts(map);
-
-    if (response.statusCode == Consts.STATUS_SUCCESS) {
-      pageStatus = Consts.STATUS_SUCCESSFUL;
-      if(jsonDecode(response.body).length == 10){
-        requestPermitted = true;
-        progressVisibility = true;
-        pageNum += 1;
-      } else {
-        progressVisibility = false;
-      }
-      products = response.body;
-    }
+  Future<void> requestAllCategories() async {
+    categories = await CategoryRepository().getCategories();
   }
 
   refreshPage() {
-    pageStatus = Consts.STATUS_LOADING;
-    _products = null;
+    _categories.clear();
     pageNum = 1;
-    update();
+    pageStatus = STATUS_LOADING;
+    return requestAllCategories().then((_) => pageStatus = STATUS_SUCCESSFUL);
+  }
 
-    return requestProducts().then((value) => Consts.STATUS_SUCCESSFUL);
+  GestureTapCallback openAllProducts(int categoryId) {
+    return () {
+      selectedCategoryId = categoryId;
+      Get.toNamed("/all_products_page");
+    };
+  }
+
+  void carouselSliderWidgets() {
+    carouselItems = List<Widget>.from(
+        mainController.sliders.map((item) => CustomSliderItem(item)).toList());
+  }
+
+  List<CategoryModel> getPureCategories(){
+    if(categories != null){
+      final pureCategories = List<CategoryModel>();
+      pureCategories.addAll(categories);
+      pureCategories.removeAt(0);
+      return pureCategories;
+    }
+    return null;
   }
 }

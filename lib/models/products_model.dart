@@ -392,18 +392,24 @@ class Store {
   int id;
   String name;
   String shopName;
-  String url;
-  Address address;
+  // String url;
+  // Address address;
 
-  Store({this.id, this.name, this.shopName, this.url, this.address});
+  Store({
+    this.id,
+    this.name,
+    this.shopName,
+    // this.url,
+    //this.address
+  });
 
   Store.fromJson(dynamic json) {
     id = json["id"];
     name = json["name"];
     shopName = json["shop_name"];
-    url = json["url"];
-    address =
-        json["address"] != null ? Address.fromJson(json["address"]) : null;
+    // url = json["url"];
+    // address =
+    //     json["address"] != null ? Address.fromJson(json["address"]) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -411,10 +417,10 @@ class Store {
     map["id"] = id;
     map["name"] = name;
     map["shop_name"] = shopName;
-    map["url"] = url;
-    if (address != null) {
-      map["address"] = address.toJson();
-    }
+    // map["url"] = url;
+    // if (address != null) {
+    //   map["address"] = address.toJson();
+    // }
     return map;
   }
 }
@@ -504,17 +510,17 @@ class Images {
   // String alt;
   // int position;
 
-  Images(
-      {this.id,
-      this.src,
-      // this.dateCreated,
-      // this.dateCreatedGmt,
-      // this.dateModified,
-      // this.dateModifiedGmt,
-      // this.name,
-      // this.alt,
-      // this.position
-      });
+  Images({
+    this.id,
+    this.src,
+    // this.dateCreated,
+    // this.dateCreatedGmt,
+    // this.dateModified,
+    // this.dateModifiedGmt,
+    // this.name,
+    // this.alt,
+    // this.position
+  });
 
   Images.fromJson(dynamic json) {
     id = json["id"];

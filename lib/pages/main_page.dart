@@ -4,14 +4,16 @@ import 'package:get/get.dart';
 import 'package:shoplustyle/controllers/home_page_controller.dart';
 import 'package:shoplustyle/controllers/slider_controller.dart';
 import 'package:shoplustyle/controllers/bottom_nav_controller.dart';
+import 'package:shoplustyle/pages/blog_page.dart';
+import 'package:shoplustyle/pages/home_page.dart';
+import 'package:shoplustyle/pages/profile_page.dart';
 import 'package:shoplustyle/widgets/custom_app_bar.dart';
 import 'package:shoplustyle/widgets/bottom_nav.dart';
 
 class MainPage extends StatelessWidget {
-
-  final homePageController = Get.put(HomePageController());
-  final SliderController bannerController = Get.find();
-  final navController = Get.put(NavController());
+  final HomePageController homePageController = Get.find();
+  final SplashPageController bannerController = Get.find();
+  final NavController navController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +32,25 @@ class MainPage extends StatelessWidget {
                       Wrap(
                         children: [CustomAppBar()],
                       ),
-                      GetBuilder<NavController>(
-                        builder: (value) {
-                          return value.pagesInfo[value.selected.value]
-                              ["object"];
-                        },
-                      ),
+
+                      Expanded(
+                        child: NotificationListener<OverscrollIndicatorNotification>(
+                          onNotification: (notification) {
+
+                            notification.disallowGlow();
+                            return;
+                          },
+                          child: TabBarView(
+                              controller: navController.tabController,
+                              children: [BlogPage(), HomePage(), ProfilePage()]),
+                        ),
+                      )
+                      // GetBuilder<NavController>(
+                      //   builder: (value) {
+                      //     return value.pagesInfo[value.selected]
+                      //         ["object"];
+                      //   },
+                      // ),
                     ],
                   ),
                 ),

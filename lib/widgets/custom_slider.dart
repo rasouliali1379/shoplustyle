@@ -1,41 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
-import 'package:shoplustyle/controllers/slider_controller.dart';
+import 'package:shoplustyle/controllers/home_page_controller.dart';
 import 'package:shoplustyle/utils/consts.dart';
-import 'package:shoplustyle/widgets/custom_slider_item.dart';
 
 final aspectRatio = 4 / 3;
 
-final SliderController sliderController = Get.find();
-final loadItems = List<Widget>.from(sliderController.imageList
-    .map((item) => CustomSliderItem(item))
-    .toList());
+final HomePageController _controller = Get.find();
 
 class CustomSlider extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       CarouselSlider(
-        items: loadItems,
+        items: _controller.carouselItems,
         options: CarouselOptions(
             autoPlay: true,
-            initialPage: sliderController.slide,
             enlargeCenterPage: true,
             viewportFraction: 1,
             aspectRatio: aspectRatio,
-            onPageChanged: (index, _) => sliderController.slide = index),
+            onPageChanged: (index, _) => _controller.sliderIndex = index),
       ),
-      GetBuilder<SliderController>(
-          builder: (controller) => sliderDots(controller.slide))
+      GetX<HomePageController>(
+          builder: (controller) => sliderDots(controller.sliderIndex))
     ]);
   }
 
   Widget sliderDots(int current) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
-      children: loadItems.map((url) {
-        int index = loadItems.indexOf(url);
+      children: _controller.carouselItems.map((url) {
+        int index = _controller.carouselItems.indexOf(url);
         return Container(
           width: 8.0,
           height: 8.0,
@@ -43,8 +38,8 @@ class CustomSlider extends StatelessWidget {
           decoration: BoxDecoration(
             shape: BoxShape.circle,
             color: current == index
-                ? Consts.PRIMARY_LIGHT
-                : Consts.PRIMARY_LIGHT.withOpacity(0.4),
+                ? PRIMARY_LIGHT
+                : PRIMARY_LIGHT.withOpacity(0.4),
           ),
         );
       }).toList(),

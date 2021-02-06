@@ -20,7 +20,7 @@ class CustomSliderItem extends StatelessWidget {
           borderRadius: navBorderRadius,
           boxShadow: [
             BoxShadow(
-              color: Consts.PRIMARY_LIGHT.withOpacity(0.5),
+              color: PRIMARY_LIGHT.withOpacity(0.5),
               offset: const Offset(0, 2),
               blurRadius: 5.0,
               spreadRadius: 1.0,

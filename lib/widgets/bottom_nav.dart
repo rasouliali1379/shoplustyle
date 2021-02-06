@@ -25,7 +25,7 @@ class CustomBottomNav extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                navController.selected.value == 0?
+                navController.selected == 0?
                   RadiantGradientMask(
                     child:
                       FaIcon(
@@ -40,9 +40,9 @@ class CustomBottomNav extends StatelessWidget {
                       color: Colors.grey,
                       size: 28,
                     ),
-                    onTap: () => navController.switchPage(Consts.BLOG_PAGE)
+                    onTap: () => navController.selected = BLOG_PAGE
                   ),
-                navController.selected.value == 1?
+                navController.selected == 1?
                 RadiantGradientMask(
                   child:
                   FaIcon(
@@ -57,24 +57,24 @@ class CustomBottomNav extends StatelessWidget {
                     color: Colors.grey,
                     size: 28,
                   ),
-                  onTap: () => navController.switchPage(Consts.HOME_PAGE)
+                  onTap: () => navController.selected = HOME_PAGE
                 ),
-                navController.selected.value == 2?
+                navController.selected == 2?
                 RadiantGradientMask(
                   child:
                     FaIcon(
-                      FontAwesomeIcons.search,
+                      FontAwesomeIcons.user,
                       color: Colors.white,
                       size: 28,
                     ),
                 ) :
                 GestureDetector(
                   child: FaIcon(
-                    FontAwesomeIcons.search,
+                    FontAwesomeIcons.user,
                     color: Colors.grey,
                     size: 28,
                   ),
-                  onTap: () => navController.switchPage(Consts.SEARCH_PAGE)
+                  onTap: () => navController.selected = SEARCH_PAGE
                 ),
               ],
             ),
