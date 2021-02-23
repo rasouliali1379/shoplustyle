@@ -1,20 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shoplustyle/utils/consts.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hint;
   final TextInputType textInputType;
+  final TextEditingController controller;
+  final List<TextInputFormatter> inputFormatters;
 
 
-  CustomTextField(this.hint, this.textInputType);
+  CustomTextField({this.hint, this.textInputType, this.controller,this.inputFormatters});
 
   @override
   Widget build(BuildContext context) {
     return TextField(
+      inputFormatters: inputFormatters,
         textAlign: TextAlign.center,
         maxLines: 1,
         textDirection: TextDirection.rtl,
         keyboardType: TextInputType.number,
+        controller: controller,
         style: TextStyle(
           fontFamily: 'iransans',
         ),

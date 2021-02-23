@@ -18,4 +18,5 @@ class SplashPageController extends GetxController {
       Get.offNamed("/main_page");
     }
   }
+
 }

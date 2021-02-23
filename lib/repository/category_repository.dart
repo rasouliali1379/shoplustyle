@@ -6,36 +6,35 @@ import 'package:shoplustyle/utils/consts.dart';
 
 class CategoryRepository {
   final ApiRequests _apiRequests = ApiRequests();
-  final categories = List<CategoryModel>();
   int pageNum = 1;
 
-  Future<List<CategoryModel>> getCategories() async {
-    if (categories.length == 0) {
-      categories.insert(0, CategoryModel(id: -1, name: "همه"));
-    }
+  Future<List<CategoryModel>> getAllCategories() async {
 
-    String result = await requestCategories();
+    Map<String, String> map = {
+      "page": pageNum.toString(),
+      "hide_empty": "true"
+    };
+
+    String result = await requestCategories(map);
 
     final rawJson = jsonDecode(result);
     final extractedList = List<CategoryModel>.from(
         rawJson.map((model) => CategoryModel.fromJson(model)));
 
+    final categories = List<CategoryModel>();
+
     categories.addAll(extractedList);
 
     if (rawJson.length == 10) {
       pageNum++;
-      await getCategories();
+      await getAllCategories();
     }
 
     return categories;
   }
 
-  Future<String> requestCategories() async {
-    Map<String, String> map = {
-      "page": pageNum.toString(),
-      "hide_empty": "true",
-      "parent": "0"
-    };
+  Future<String> requestCategories(Map<String, String> map) async {
+
     var response = await _apiRequests.getCategories(map);
 
     if (response.statusCode == STATUS_SUCCESS) {

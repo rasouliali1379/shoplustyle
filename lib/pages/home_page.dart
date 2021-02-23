@@ -24,20 +24,17 @@ class _HomePageState extends State<HomePage>
       color: PRIMARY_LIGHT,
       onRefresh: () => _controller.refreshPage(),
       key: _controller.refreshIndicatorKey,
-      child: SingleChildScrollView(
-        physics: BouncingScrollPhysics(),
-        controller: _controller.scrollController,
-        child: GetX<HomePageController>(builder: (controller) {
-          if (_controller.getPureCategories() == null) {
-            return Container();
-          } else {
-            return ListView(
-                shrinkWrap: true,
-                physics: NeverScrollableScrollPhysics(),
-                children: [CustomSlider(), productListView()]);
-          }
-        }),
-      ),
+      child: GetX<HomePageController>(builder: (controller) {
+        if (controller.getPureCategories() == null) {
+          return Container();
+        } else {
+          return ListView(
+              padding: EdgeInsets.only(bottom: 70),
+              shrinkWrap: true,
+              physics: BouncingScrollPhysics(),
+              children: [CustomSlider(), productListView()]);
+        }
+      }),
     );
   }
 

@@ -5,7 +5,7 @@ import 'package:shoplustyle/pages/home_page.dart';
 import 'package:shoplustyle/pages/profile_page.dart';
 
 class NavController extends GetxController with SingleGetTickerProviderMixin {
-  TabController _tabController;
+  PageController _pageController;
 
   final pagesInfo = [
     {"name": "Blog", "object": BlogPage()},
@@ -13,28 +13,24 @@ class NavController extends GetxController with SingleGetTickerProviderMixin {
     {"name": "Search", "object": ProfilePage()},
   ];
 
-  var _selected = 1;
+  var _selected = 1.obs;
 
-  get selected => _selected;
+  get selected => _selected.value;
 
   set selected(value) {
-    _selected = value;
-    _tabController.index = value;
+    _selected.value = value;
     update();
   }
 
-  switchPage(value) {
-    _selected = _tabController.index;
-    update();
+  jumpToPage(int value){
+    _pageController.jumpToPage(value);
+    selected = value;
   }
 
-  get tabController {
-    _tabController = TabController(
-        initialIndex: selected, length: pagesInfo.length, vsync: this);
+  get pageController {
+    _pageController = PageController(
+        initialPage: selected);
 
-    _tabController.addListener(() {
-      switchPage(_tabController.index);
-    });
-    return _tabController;
+    return _pageController;
   }
 }

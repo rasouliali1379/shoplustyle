@@ -22,6 +22,7 @@ const String STATUS_SUCCESSFUL = "success";
 const String STATUS_FAILED = "failed";
 const String STATUS_EMPTY = "empty";
 const String STATUS_LOADING = "loading";
+const String STATUS_BUY = "buy";
 
 //Loader variations
 const String FADING_CIRCLE_SPIN = "fading_circle";

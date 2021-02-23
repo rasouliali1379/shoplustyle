@@ -42,23 +42,6 @@ class CustomButton extends StatelessWidget {
             color: PRIMARY_LIGHT,
             fontWeight: textWeight),
       ),
-      // Ink(
-      //   decoration: BoxDecoration(
-      //     gradient: LinearGradient(
-      //         colors: gradientColors ?? defaultGradientColors,
-      //         begin: Alignment.topCenter,
-      //         end: Alignment.bottomCenter),
-      //     borderRadius: borderRadius ?? defaultBorderRadius,
-      //   ),
-      //   child: Container(
-      //       constraints: const BoxConstraints(minWidth: 100, minHeight: 36.0),
-      //       alignment: Alignment.center,
-      //       child: CustomText(
-      //           text: text,
-      //           fontSize: textSize,
-      //           color: textColor,
-      //           fontWeight: textWeight)),
-      // ),
       shape: shape ??
           RoundedRectangleBorder(
               borderRadius: borderRadius ?? defaultBorderRadius,

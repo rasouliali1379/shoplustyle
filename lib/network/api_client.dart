@@ -1,7 +1,7 @@
 import 'package:shoplustyle/utils/consts.dart';
 
 class ApiClient {
-  String _url = null;
+  String _url;
   ApiClient(String basePath){
       _url = BASE_URL + basePath;
       oauth1();

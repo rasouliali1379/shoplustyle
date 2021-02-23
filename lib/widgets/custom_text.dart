@@ -12,6 +12,9 @@ class CustomText extends StatelessWidget {
   final TextDirection textDirection;
   final List<Color> colors;
   final TextDecoration textDecoration;
+  final int maxLines;
+  final double height;
+  final TextAlign textAlign;
 
   CustomText(
       {this.text = "",
@@ -21,12 +24,16 @@ class CustomText extends StatelessWidget {
       this.fontSize = 12.0,
       this.textDirection = TextDirection.rtl,
       this.colors,
-      this.textDecoration = TextDecoration.none});
+      this.maxLines = 1,
+        this.height,
+      this.textDecoration = TextDecoration.none,
+      this.textAlign});
 
   @override
   Widget build(BuildContext context) {
     final textStyle = TextStyle(
         color: colors == null ? color : null,
+        height: height != null? height : null,
         fontSize: fontSize,
         fontFamily: fontFamily,
         fontWeight: fontWeight,
@@ -34,17 +41,20 @@ class CustomText extends StatelessWidget {
 
     return colors == null
         ? Text(
-            Utils.persianDigits(text),
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            Utils.toPersianDigits(text),
+
+            maxLines: maxLines == -1 ? null : maxLines,
+            overflow: maxLines == -1 ? null : TextOverflow.ellipsis,
+            textAlign: textAlign != null ? textAlign : null,
             style: textStyle,
             textDirection: textDirection,
           )
         : GradientText(
-            text: Utils.persianDigits(text),
+            text: Utils.toPersianDigits(text),
             colors: colors,
-            maxLines: 1,
-            overflow: TextOverflow.ellipsis,
+            maxLines: maxLines == -1 ? null : maxLines,
+            overflow: maxLines == -1 ? null : TextOverflow.ellipsis,
+            textAlign: textAlign != null ? textAlign : null,
             style: textStyle,
             textDirection: textDirection,
             gradientDirection: GradientDirection.ttb,

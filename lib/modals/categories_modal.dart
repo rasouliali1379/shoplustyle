@@ -1,19 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shoplustyle/controllers/all_products_page_controller.dart';
-import 'package:shoplustyle/controllers/filters_page_controller.dart';
 import 'package:shoplustyle/models/category_model.dart';
 import 'package:shoplustyle/utils/consts.dart';
-import 'package:shoplustyle/widgets/categories_model_item.dart';
+import 'package:shoplustyle/widgets/category_drop_down_item.dart';
 import 'package:shoplustyle/widgets/custom_text.dart';
 
 class CategoriesModal extends StatelessWidget {
   final String title;
   final List<CategoryModel> categories;
   final itemClickListener;
-
-
-  CategoriesModal(this.title, this.categories, this.itemClickListener);
+  final int parentId;
+  final bool subCategory;
+  CategoriesModal(
+      this.title, this.categories, this.itemClickListener, this.parentId,this.subCategory);
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +45,7 @@ class CategoriesModal extends StatelessWidget {
                 itemCount: categories.length,
                 itemBuilder: (context, index) => GestureDetector(
                     onTap: itemClickListener(categories[index]),
-                    child: CategoriesModelItem(categories[index])),
+                    child: CategoryDropDownItem(categories[index], parentId,subCategory)),
               ),
             ),
           ],

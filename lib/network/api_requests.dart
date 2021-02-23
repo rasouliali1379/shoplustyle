@@ -25,6 +25,12 @@ class ApiRequests{
     return response;
   }
 
+  Future<Response> getProduct(int id) async{
+    _apiClient = ApiClient("wp-json/wc/v2/products/${id.toString()}");
+    var response = await http.get(_apiClient.getUrl());
+    return response;
+  }
+
   Future<Response> getCategories(Map<String, String> map) async{
     _apiClient = ApiClient("wp-json/wc/v2/products/categories");
     var response = await http.get(_apiClient.getUrl()  + Utils.queryBuilder(map));

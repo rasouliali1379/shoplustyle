@@ -1,3 +1,4 @@
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,6 @@ import 'package:shoplustyle/controllers/home_page_controller.dart';
 import 'package:shoplustyle/utils/consts.dart';
 
 final aspectRatio = 4 / 3;
-
 final HomePageController _controller = Get.find();
 
 class CustomSlider extends StatelessWidget {
@@ -21,28 +21,20 @@ class CustomSlider extends StatelessWidget {
             aspectRatio: aspectRatio,
             onPageChanged: (index, _) => _controller.sliderIndex = index),
       ),
-      GetX<HomePageController>(
-          builder: (controller) => sliderDots(controller.sliderIndex))
+      sliderDots()
     ]);
   }
 
-  Widget sliderDots(int current) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: _controller.carouselItems.map((url) {
-        int index = _controller.carouselItems.indexOf(url);
-        return Container(
-          width: 8.0,
-          height: 8.0,
-          margin: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2.0),
-          decoration: BoxDecoration(
-            shape: BoxShape.circle,
-            color: current == index
-                ? PRIMARY_LIGHT
-                : PRIMARY_LIGHT.withOpacity(0.4),
-          ),
-        );
-      }).toList(),
+  Widget sliderDots() {
+    return GetX<HomePageController>(
+      builder: (controller) => DotsIndicator(
+        dotsCount: controller.carouselItems.length,
+        position: controller.sliderIndex.toDouble(),
+        decorator: DotsDecorator(
+            color: PRIMARY_LIGHT.withOpacity(0.4), // Inactive color
+            activeColor: PRIMARY_LIGHT,
+            spacing: EdgeInsets.only(top: 4, left: 2, right: 2,bottom: 16)),
+      ),
     );
   }
 }

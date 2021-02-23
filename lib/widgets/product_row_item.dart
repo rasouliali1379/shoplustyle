@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:shoplustyle/controllers/home_page_controller.dart';
 import 'package:shoplustyle/models/category_model.dart';
 import 'package:shoplustyle/models/products_model.dart';
-import 'package:shoplustyle/pages/all_products_page.dart';
 import 'package:shoplustyle/repository/products_repository.dart';
 import 'package:shoplustyle/utils/consts.dart';
 import 'package:shoplustyle/widgets/custom_text.dart';
@@ -36,7 +35,7 @@ class ProductRowItem extends StatelessWidget {
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
                   color: PRIMARY_LIGHT,
-                  colors: [PRIMARY_LIGHT,PRIMARY_DARK],
+                  colors: [PRIMARY_LIGHT, PRIMARY_DARK],
                 ),
                 moreProductsBtn()
               ],
@@ -57,23 +56,26 @@ class ProductRowItem extends StatelessWidget {
     );
   }
 
-  Widget productListView(List<ProductsModel> list) {
+  Widget productListView(List<ProductModel> list) {
     return Align(
       alignment: Alignment.centerLeft,
       child: ListView.builder(
+          physics: BouncingScrollPhysics(),
           padding: EdgeInsets.only(left: 8, right: 8),
           scrollDirection: Axis.horizontal,
           shrinkWrap: true,
           itemCount: list.length,
           itemBuilder: (BuildContext context, int index) {
-            return ProductItem(list[index]);
+            return GestureDetector(
+                onTap: _controller.mainController.openProductPage(list[index]),
+                child: ProductItem(list[index], false));
           }),
     );
   }
 
   Widget moreProductsBtn() {
     return GestureDetector(
-      onTap:_controller.openAllProducts(_category.id),
+      onTap: _controller.openAllProducts(_category.id),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(5)),
         child: Container(
@@ -86,7 +88,7 @@ class ProductRowItem extends StatelessWidget {
           child: Row(
             children: [
               Padding(
-                padding: const EdgeInsets.only(right: 8),
+                padding: const EdgeInsets.only(left: 8),
                 child: CustomText(
                     fontSize: 10,
                     fontWeight: FontWeight.bold,
@@ -94,7 +96,7 @@ class ProductRowItem extends StatelessWidget {
                     color: Colors.white),
               ),
               FaIcon(
-                FontAwesomeIcons.longArrowAltRight,
+                FontAwesomeIcons.longArrowAltLeft,
                 color: Colors.white,
                 size: 22,
               ),

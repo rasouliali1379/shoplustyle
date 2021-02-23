@@ -1,12 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:shoplustyle/controllers/slider_controller.dart';
 import 'package:shoplustyle/utils/consts.dart';
 import 'package:shoplustyle/widgets/loading.dart';
 
 class SplashPage extends StatelessWidget {
-
-  final SplashPageController _controller = Get.find();
 
   @override
   Widget build(BuildContext context) {

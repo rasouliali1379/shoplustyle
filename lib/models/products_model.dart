@@ -1,4 +1,4 @@
-class ProductsModel {
+class ProductModel {
   int id;
   String name;
   String type;
@@ -11,7 +11,7 @@ class ProductsModel {
   String salePrice;
   bool onSale;
   bool purchasable;
-  int totalSales;
+  // int totalSales;
   bool inStock;
   bool reviewsAllowed;
   String averageRating;
@@ -60,12 +60,12 @@ class ProductsModel {
   // String purchaseNote;
   // List<dynamic> upsellIds;
   // List<dynamic> crossSellIds;
-  // int parentId;
+  int parentId;
   // List<Tags> tags;
   // List<dynamic> defaultAttributes;
   // List<dynamic> groupedProducts;
 
-  ProductsModel({
+  ProductModel({
     this.id,
     this.name,
     this.type,
@@ -78,7 +78,7 @@ class ProductsModel {
     this.salePrice,
     this.onSale,
     this.purchasable,
-    this.totalSales,
+    // this.totalSales,
     this.inStock,
     this.reviewsAllowed,
     this.averageRating,
@@ -127,7 +127,7 @@ class ProductsModel {
     // this.shippingClassId,
     // this.upsellIds,
     // this.crossSellIds,
-    // this.parentId,
+    this.parentId,
     // this.purchaseNote,
     // this.tags,
     // this.defaultAttributes,
@@ -135,7 +135,7 @@ class ProductsModel {
     // this.links
   });
 
-  ProductsModel.fromJson(dynamic json) {
+  ProductModel.fromJson(dynamic json) {
     id = json["id"];
     name = json["name"];
     type = json["type"];
@@ -148,7 +148,7 @@ class ProductsModel {
     salePrice = json["sale_price"];
     onSale = json["on_sale"];
     purchasable = json["purchasable"];
-    totalSales = json["total_sales"];
+    // totalSales = json["total_sales"];
     inStock = json["in_stock"];
     reviewsAllowed = json["reviews_allowed"];
     averageRating = json["average_rating"];
@@ -228,7 +228,7 @@ class ProductsModel {
     //     crossSellIds.add(dynamic.fromJson(v));
     //   });
     // }
-    // parentId = json["parent_id"];
+    parentId = json["parent_id"];
     // purchaseNote = json["purchase_note"];
     // if (json["tags"] != null) {
     //   tags = [];
@@ -271,7 +271,7 @@ class ProductsModel {
     map["sale_price"] = salePrice;
     map["on_sale"] = onSale;
     map["purchasable"] = purchasable;
-    map["total_sales"] = totalSales;
+    // map["total_sales"] = totalSales;
     map["in_stock"] = inStock;
     map["reviews_allowed"] = reviewsAllowed;
     map["average_rating"] = averageRating;
@@ -335,7 +335,7 @@ class ProductsModel {
     // if (crossSellIds != null) {
     //   map["cross_sell_ids"] = crossSellIds.map((v) => v.toJson()).toList();
     // }
-    // map["parent_id"] = parentId;
+    map["parent_id"] = parentId;
     // map["purchase_note"] = purchaseNote;
     // if (tags != null) {
     //   map["tags"] = tags.map((v) => v.toJson()).toList();

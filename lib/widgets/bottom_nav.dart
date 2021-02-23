@@ -7,7 +7,7 @@ import 'package:shoplustyle/widgets/radiant_gradient_mask.dart';
 
 class CustomBottomNav extends StatelessWidget {
 
-  var navBorderRadius = BorderRadius.circular(20);
+  final navBorderRadius = BorderRadius.circular(20);
   final NavController navController = Get.find();
 
   @override
@@ -40,7 +40,7 @@ class CustomBottomNav extends StatelessWidget {
                       color: Colors.grey,
                       size: 28,
                     ),
-                    onTap: () => navController.selected = BLOG_PAGE
+                    onTap: () => navController.jumpToPage(BLOG_PAGE)
                   ),
                 navController.selected == 1?
                 RadiantGradientMask(
@@ -57,7 +57,7 @@ class CustomBottomNav extends StatelessWidget {
                     color: Colors.grey,
                     size: 28,
                   ),
-                  onTap: () => navController.selected = HOME_PAGE
+                  onTap: () => navController.jumpToPage(HOME_PAGE)
                 ),
                 navController.selected == 2?
                 RadiantGradientMask(
@@ -74,7 +74,7 @@ class CustomBottomNav extends StatelessWidget {
                     color: Colors.grey,
                     size: 28,
                   ),
-                  onTap: () => navController.selected = SEARCH_PAGE
+                  onTap: () => navController.jumpToPage(SEARCH_PAGE)
                 ),
               ],
             ),

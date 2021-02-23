@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:get/get.dart';
-import 'package:shoplustyle/controllers/home_page_controller.dart';
 import 'package:shoplustyle/modals/categories_modal.dart';
 import 'package:shoplustyle/models/category_model.dart';
 import 'package:shoplustyle/utils/consts.dart';
 
 import 'custom_text.dart';
 
-class CustomDropDown extends StatelessWidget {
+class CategoryDropDown extends StatelessWidget {
   final String title;
   final String selectedCategory;
   final itemClickListener;
   final List<CategoryModel> categories;
+  final int parentId;
+  final bool subCategory;
 
-  CustomDropDown(this.title, this.selectedCategory, this.itemClickListener, this.categories);
+  CategoryDropDown(this.title, this.selectedCategory, this.itemClickListener,
+      this.categories, this.parentId, this.subCategory);
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () => showModalBottomSheet(
-          isScrollControlled: true,
-          context: context,
-          builder: (context) => CategoriesModal(
-              title, categories, itemClickListener)),
-      child: Padding(
-        padding: const EdgeInsets.only(bottom: 16.0),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Expanded(
-              flex: 2,
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 16.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 16),
+              child: CustomText(
+                text: title,
+                fontSize: 16,
+              ),
+            ),
+          ),
+          Expanded(
+            flex: 2,
+            child: GestureDetector(
+              onTap: () => showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (context) => CategoriesModal(
+                      title, categories, itemClickListener, parentId, subCategory)),
               child: Container(
                 decoration: BoxDecoration(
                     border: Border.all(color: PRIMARY_LIGHT, width: 2),
@@ -41,27 +51,18 @@ class CustomDropDown extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    FaIcon(FontAwesomeIcons.caretDown, color: PRIMARY_LIGHT),
                     CustomText(
                       text: selectedCategory,
                       fontSize: 16,
                       color: PRIMARY_LIGHT,
                     ),
+                    FaIcon(FontAwesomeIcons.caretDown, color: PRIMARY_LIGHT),
                   ],
                 ),
               ),
             ),
-            Expanded(
-              child: Padding(
-                padding: const EdgeInsets.only(left: 16),
-                child: CustomText(
-                  text: title,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

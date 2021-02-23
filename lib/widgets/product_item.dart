@@ -9,9 +9,9 @@ import 'package:shoplustyle/widgets/custom_text.dart';
 import 'package:shoplustyle/widgets/loading.dart';
 
 class ProductItem extends StatefulWidget {
-  final ProductsModel product;
-
-  ProductItem(this.product);
+  final ProductModel product;
+  final bool vertical;
+  ProductItem(this.product, this.vertical);
 
   @override
   _ProductItemState createState() => _ProductItemState();
@@ -27,6 +27,78 @@ class _ProductItemState extends State<ProductItem>
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    return widget.vertical ? verticalProduct() : horizontalProduct();
+  }
+
+  Widget verticalProduct() {
+    return Card(
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(15.0),
+      ),
+      margin: EdgeInsets.all(8),
+      elevation: 1,
+      child: AspectRatio(
+        aspectRatio: 16/5,
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: borderRadius,
+                boxShadow: [
+                  BoxShadow(
+                    color: PRIMARY_LIGHT.withOpacity(0.5),
+                    offset: const Offset(0, 1),
+                    blurRadius: 5.0,
+                    spreadRadius: 1.0,
+                  ),
+                ],
+              ),
+              child: AspectRatio(
+                aspectRatio: 1,
+                child: ClipRRect(
+                    borderRadius: borderRadius,
+                    child: CachedNetworkImage(
+                      fit: BoxFit.cover,
+                      imageUrl: widget.product.images[0].src,
+                      placeholder: (context, url) => Center(
+                          child: Wrap(children: [
+                            SpinKitFadingCircle(
+                              color: PRIMARY_LIGHT,
+                            )
+                          ])),
+                      errorWidget: (context, url, error) => Icon(Icons.error),
+                    )),
+              ),
+            ),
+            Expanded(
+                child: Container(
+              margin: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: CustomText(
+                      text: widget.product.name,
+                      fontSize: 15,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  getPriceLabel()
+                ],
+              ),
+            )),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget horizontalProduct() {
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15.0),
@@ -74,7 +146,7 @@ class _ProductItemState extends State<ProductItem>
                 child: Container(
               margin: EdgeInsets.all(10),
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.end,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.max,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
