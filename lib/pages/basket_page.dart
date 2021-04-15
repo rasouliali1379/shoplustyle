@@ -34,8 +34,8 @@ class BasketPage extends StatelessWidget {
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             itemCount: controller.basketItems.length,
-                            itemBuilder: (context, index) => basketItem(
-                                controller.basketItems[index]["id"]),
+                            itemBuilder: (context, index) =>
+                                basketItem(controller.basketItems[index]["id"]),
                           )),
                 ]))
               ],

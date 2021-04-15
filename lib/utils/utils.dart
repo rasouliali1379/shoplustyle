@@ -17,23 +17,20 @@ class Utils {
 
     return text;
   }
+
   static String toEnglishDigits(String text) {
     const english = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9'];
     const farsi = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
     for (int i = 0; i < english.length; i++) {
-      text = text.replaceAll(farsi[i],english[i]);
+      text = text.replaceAll(farsi[i], english[i]);
     }
 
     return text;
   }
 
   static String removeAllHtmlTags(String htmlText) {
-    RegExp exp = RegExp(
-        r"<[^>]*>",
-        multiLine: true,
-        caseSensitive: true
-    );
+    RegExp exp = RegExp(r"<[^>]*>", multiLine: true, caseSensitive: true);
 
     return htmlText.replaceAll(exp, '');
   }

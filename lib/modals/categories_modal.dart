@@ -10,8 +10,8 @@ class CategoriesModal extends StatelessWidget {
   final itemClickListener;
   final int parentId;
   final bool subCategory;
-  CategoriesModal(
-      this.title, this.categories, this.itemClickListener, this.parentId,this.subCategory);
+  CategoriesModal(this.title, this.categories, this.itemClickListener,
+      this.parentId, this.subCategory);
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +45,8 @@ class CategoriesModal extends StatelessWidget {
                 itemCount: categories.length,
                 itemBuilder: (context, index) => GestureDetector(
                     onTap: itemClickListener(categories[index]),
-                    child: CategoryDropDownItem(categories[index], parentId,subCategory)),
+                    child: CategoryDropDownItem(
+                        categories[index], parentId, subCategory)),
               ),
             ),
           ],

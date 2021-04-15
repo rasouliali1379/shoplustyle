@@ -11,7 +11,6 @@ import 'package:shoplustyle/utils/utils.dart';
 import 'main_page_controller.dart';
 
 class AllProductsPageController extends GetxController {
-
   final String controllerId;
 
   AllProductsPageController(this.controllerId);
@@ -95,7 +94,7 @@ class AllProductsPageController extends GetxController {
     return requestProducts().then((_) => STATUS_SUCCESSFUL);
   }
 
-  loadPage() async{
+  loadPage() async {
     requestPermitted = false;
     _products.clear();
     update();

@@ -6,9 +6,7 @@ import 'package:shoplustyle/widgets/radiant_gradient_mask.dart';
 import 'custom_text.dart';
 
 class FilterItem extends StatelessWidget {
-
   final String title;
-
 
   FilterItem(this.title);
 
@@ -16,7 +14,7 @@ class FilterItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(left: 4, right: 4),
-      padding: EdgeInsets.only(left: 16,right: 4),
+      padding: EdgeInsets.only(left: 16, right: 4),
       decoration: BoxDecoration(
           border: Border.all(color: PRIMARY_LIGHT, width: 2),
           borderRadius: BorderRadius.circular(20.0)),
@@ -24,16 +22,18 @@ class FilterItem extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          RadiantGradientMask(child: FaIcon(FontAwesomeIcons.timesCircle, color: Colors.white,size: 18,)),
+          RadiantGradientMask(
+              child: FaIcon(
+            FontAwesomeIcons.timesCircle,
+            color: Colors.white,
+            size: 18,
+          )),
           Padding(
             padding: const EdgeInsets.only(right: 8),
             child: CustomText(
               fontSize: 14,
               text: title,
-              colors: [
-                PRIMARY_LIGHT,
-                PRIMARY_DARK
-              ],
+              colors: [PRIMARY_LIGHT, PRIMARY_DARK],
             ),
           ),
         ],
